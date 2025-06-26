@@ -1,9 +1,0 @@
-
-GroceryShop/.idea/dataSources.xml
-GroceryShop/.idea/dataSources.xml
-GroceryShop/.idea/sqldialects.xml
-GroceryShop/.idea/dataSources.xml
-GroceryShop/.idea/dataSources.xml
-GroceryShop/.idea
-GroceryShop/.DS_Store
-.DS_Store
