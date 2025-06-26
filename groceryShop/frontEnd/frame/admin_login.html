@@ -1,0 +1,53 @@
+<!-- Reference: https://www.geeksforgeeks.org/html-login-form/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login as Admin</title>
+    <link rel="stylesheet" href="/base/css/admin_login.css">
+</head>
+
+<body>
+    <div class="top-left">
+        <a href="/">&larr;</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="main">
+        <h1>GroceryShop Admin Portal</h1>
+        <h3>Enter your login credentials</h3>
+        <form action="/a/login" method="post">
+            <label for="first">
+                Admin ID:
+            </label>
+            <input type="text" id="first" name="first" placeholder="Enter your Admin ID" required>
+
+            <label for="password">
+                Password:
+            </label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+
+            <div class="wrap">
+                <button type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

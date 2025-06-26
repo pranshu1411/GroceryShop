@@ -1,0 +1,49 @@
+<div class="border-end border-bottom border-start mb-3 rounded bg-light shadow-lg"
+    style="margin-left: 350px; margin-right: 350px;">
+    <h5>
+        {% if order['OrderStatus'] == 'Delivered' %}
+        <div style="background-color: green; color: white;" class="ps-3 pe-3 pb-2 pt-2">{{ order['OrderStatus'] }}
+        </div>
+        {% elif order['OrderStatus'] == 'Out for Delivery' %}
+        <div style="background-color: orange; color: white;" class="ps-3 pe-3 pb-2 pt-2">{{ order['OrderStatus'] }}
+        </div>
+        {% elif order['OrderStatus'] == 'Cancelled' %}
+        <div style="background-color: red; color: white;" class="ps-3 pe-3 pb-2 pt-2">{{ order['OrderStatus'] }}
+        </div>
+        {% else %}
+        <div style="background-color: darkorchid; color: white;" class="ps-3 pe-3 pb-2 pt-2">{{ order['OrderStatus']
+            }}</div>
+        {% endif %}
+    </h5>
+    <div class="row ps-3 pe-3 fw-normal">
+        <div class="col-3 text-start" style="font-weight: 600;">
+            Total Bill: &#x20b9;{{ order['cost'] }}
+        </div>
+        <div class="col-9 text-end" style="font-weight: 600;">
+            Ordered on:
+            {{ order['OrderTime'].strftime('%d %b, %Y') }}, {{ order['OrderTime'].strftime('%H:%M') }}
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-3 ms-3 mb-2 mt-3">
+            {% if order['ItemName'] in images %}
+            <img src="{{ images[order['ItemName']] }}" alt="{{ order['ItemName'] }}" height="150" width="150"
+                style="border-radius: 50%;">
+            {% else %}
+            <img src="/base/images/placeholder.jpg" height="125" width="125" alt="{{ order['itemName'] }}"
+                style="border-radius: 50%; margin-left: 30px;">
+            {% endif %}
+        </div>
+        <div class="col-8 mt-4">
+            <h6 class="fs-4">{{ order['ItemName']}}</h6>
+            Price: &#x20b9;{{ order['price']}} ({{ order['unit']}})<br>
+            Quantity: {{ order['quantity'] }}
+        </div>
+    </div>
+    <div class="btn-group w-100" role="group">
+        <a href="/c/{{ order['customerID'] }}/reorder/{{ order['OrderID'] }}"
+            class="btn bg-success text-white fw-bold pt-2 pb-2">Reorder</button>
+            <a href="/c/{{ order['customerID'] }}/orders/{{ order['OrderID'] }}/rate"
+                class="btn bg-dark text-white fw-bold pt-2 pb-2">Rate Order</a>
+    </div>
+</div>
