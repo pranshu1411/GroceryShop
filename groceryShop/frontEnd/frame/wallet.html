@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Wallet</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/navbar.css">
+    <style>
+        .heading {
+            vertical-align: middle;
+            padding-left: 200px;
+        }
+
+        .Wallet-box {
+            display: flex;
+            flex-direction: column;
+            margin-left: 500px;
+            margin-right: 500px;
+        }
+
+        .balance-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .topup-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #3e8e41;
+        }
+
+        .input-button-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-button-container input {
+            flex: 1;
+            margin-right: 10px;
+            height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="custom-navbar">
+        <header class="header">
+            <a href="/loginpage" class="logo"> <img src="/static/img/logo.png" alt="GroceryShop Logo"> GroceryShop </a>
+            <nav class="navbar">
+                <a href="/c/{{ user_id }}">Home</a>
+                <a href="/c/{{ user_id }}/Products">Products</a>
+                <a href="/c/{{ user_id }}/reviews">Reviews </a>
+                <a href="/c/{{ user_id }}/orders">Past Orders</a>
+            </nav>
+            <div class="icons">
+                <a href="/c/{{ user_id }}/cart" style="text-decoration: none;">
+                    <div class="fa fa-shopping-cart" id="cart-btn"></div>
+                </a>
+                <a href="/c/{{ user_id }}/Profile" style="text-decoration: none;">
+                    <div class="fa fa-user" id="login-btn"></div>
+                </a>
+            </div>
+        </header>
+    </div>
+    <script>
+        function toggleSearch() {
+            var searchContainer = document.getElementById("search-container");
+            if (searchContainer.style.display === "block") {
+                searchContainer.style.display = "none";
+            } else {
+                searchContainer.style.display = "block";
+            }
+        }
+    </script>
+    <div class="Wallet-box" style="margin-top: 120px;">
+        <div class="balance-section">
+            <div>
+                <p>Available Balance:</p>
+            </div>
+            <div id="balance">{{ bal }}</div>
+        </div>
+        <div class="topup-section">
+            <p>Topup</p>
+            <div>
+                <button onclick="setInputValue(100)">100</button>
+                <button onclick="setInputValue(200)">200</button>
+                <button onclick="setInputValue(500)">500</button>
+                <button onclick="setInputValue(1000)">1000</button>
+            </div>
+        </div>
+        <div class="input-button-container">
+            <input id="amountInput" min="0" type="number" placeholder="Enter Amount">
+            <button onclick="addMoney()">Add Money</button>
+        </div>
+    </div>
+
+    <script>
+        function setInputValue(value) {
+            document.getElementById('amountInput').value = value;
+        }
+
+        function addMoney() {
+            var amount = document.getElementById('amountInput').value;
+            var user = window.location.pathname.split("/")[2];
+            console.log(user)
+            $.ajax({
+                type: 'POST',
+                url: `/c/${user}/wallet`,
+                data: { 'amount': amount },
+                success: function (response) {
+                    $('#balance').text(response.bal);
+                    $('#amountInput').val('');
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

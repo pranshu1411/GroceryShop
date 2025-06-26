@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Query</title>
+    {% include 'bootstrap.html' %}
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+            <a href="/a/{{ admin }}/modify">
+                <p class="text-muted h4">Modify database</p>
+            </a>
+            <a href="/a/{{ admin }}/stats">
+                <p class="text-muted h4">View statistics</p>
+            </a>
+            <a href="/a/{{ admin }}/query">
+                <p class="text-white h4">Custom Query</p>
+            </a>
+            <a href="/a/{{ admin }}"><span class="text-muted">Admin {{ admin }}</span></a>
+        </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <h5 class="text-white h5" style="margin-right: 1310px; margin-top: 7px;">Custom Query</h5>
+        </div>
+    </nav>
+    <input type="text" id="queryInput" placeholder="Enter your query..."
+        style="margin-top: 20px; margin-left: 20px; padding-left: 10px;padding-bottom: 7px; padding-top: 4px; padding-right: 40px;">
+    <button type="button" class="btn btn-dark" onclick="executeQuery()">Execute</button>
+
+    <div id="queryResult" style="margin-left: 25px; margin-top: 25px;"></div>
+
+    <script>
+        function executeQuery() {
+            var query = document.getElementById("queryInput").value;
+            var adminId = window.location.pathname.split("/")[2];
+            fetch('/a/${adminID}/query/execute', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ query: query })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayResult(data);
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                });
+            function displayResult(results) {
+                var queryResultDiv = document.getElementById("queryResult");
+                queryResultDiv.innerHTML = "";
+
+                var table = document.createElement("table");
+                table.border = "1";
+
+                var headerRow = table.insertRow();
+                for (var key in results[0]) {
+                    if (results[0].hasOwnProperty(key)) {
+                        var headerCell = headerRow.insertCell();
+                        headerCell.textContent = key;
+                    }
+                }
+
+                results.forEach(function (result) {
+                    var row = table.insertRow();
+                    for (var key in result) {
+                        if (result.hasOwnProperty(key)) {
+                            var cell = row.insertCell();
+                            cell.textContent = result[key];
+                        }
+                    }
+                });
+
+                queryResultDiv.appendChild(table);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+a {
+    text-decoration: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    margin-top: 7px;
+}
+
+h4 {
+    margin-left: 100px;
+    margin-bottom: 30px;
+    background-color: rgb(40, 36, 44);
+    margin-right: 200px;
+    color: white;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 7px 7px 7px 7px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid rgb(40, 36, 44);
+}
+
+input:focus {
+    border-bottom: 3px solid #555;
+}
+
+.custom-btn {
+    width: 1220px;
+    font-size: 20px;
+    margin-left: 100px;
+    margin-top: 50px;
+    margin-bottom: 70px;
+}
