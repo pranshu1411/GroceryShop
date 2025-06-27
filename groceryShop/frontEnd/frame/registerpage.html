@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../base/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    {% include 'bootstrap.html' %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            color: green;
+        }
+
+        .header .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #register-form form {
+            max-width: 500px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        #register-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            align-items: center;
+            margin-top: 70px;
+            width: 100%;
+            max-width: 1000px;
+            box-sizing: border-box;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: medium;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 35px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #register-btn {
+            grid-column: span 2;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #register-btn:hover {
+            background-color: darkgreen;
+        }
+
+        #register-btn:focus {
+            outline: none;
+        }
+
+        .error {
+            color: red;
+            grid-column: span 2;
+        }
+
+        #register-form h2 {
+            margin-bottom: 20px;
+            color: green;
+            margin-left: 150px;
+            font-weight: bold;
+
+        }
+
+        #register-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #image-container {
+            position: absolute;
+            top: 270px;
+            right: 100px;
+        }
+
+        #image-container img {
+            height: 200px;
+            width: 150px;
+            object-fit: contain;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="/" class="logo"> <img src="../base/images/logo.png" alt="GroceryShop Logo"> GroceryShop </a>
+        <nav class="navbar">
+            <a href="/c/{{ 0 }}">Home </a>
+            <a href="/c/{{ 0 }}/Products">Products </a>
+            <a href="/c/{{ 0 }}/reviews" style="margin-right: 300px;">Reviews </a>
+        </nav>
+    </header>
+
+    <div id="register-form">
+        <h2>Create your profile</h2>
+        <form action="/registerpage" method="POST">
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" name="first-name" required>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" name="last-name">
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" required min="0">
+            </div>
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="tel" id="phone-number" name="phone-number" required pattern="[0-9]{10}"
+                    title="Phone number must be 10 digits">
+            </div>
+            <div class="form-group">
+                <label for="login-id">Enter your email ID</label>
+                <input type="email" id="login-id" name="login-id" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Enter Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="address-line1">Address Line 1</label>
+                <input type="text" id="address-line1" name="address-line1" required>
+            </div>
+            <div class="form-group">
+                <label for="address-line2">Address Line 2</label>
+                <input type="text" id="address-line2" name="address-line2">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" required>
+            </div>
+            <div class="form-group">
+                <label for="pin-code">Pin Code</label>
+                <input type="text" id="pin-code" name="pin-code" required pattern="[0-9]{6}"
+                    title="Pin code must be 6 digits">
+            </div>
+            <button type="submit" id="register-btn">Register</button>
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+    <div id="image-container">
+        <img src="../base/images/grocery_bag_regpage.png" alt="Grocery Bag Image" height="100px" width="100px">
+    </div>
+
+</body>
+
+</html>

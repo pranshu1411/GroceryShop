@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Checkout</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../base/css/navbar.css">
+    {% include 'bootstrap.html' %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .Cart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 150px;
+        }
+
+        .Cart-item {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            width: 30%;
+            text-align: center;
+        }
+
+        .Item-image {
+            width: 125px;
+            height: 125px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .Item-description {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .quantity-btn {
+            font-size: 18px;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            margin: 0 5px;
+            background-color: #f8f9fa;
+            cursor: default;
+        }
+
+        .increase-btn,
+        .decrease-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .increase-btn:hover,
+        .decrease-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .Biling {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .Bill1,
+        .Bill2,
+        .Bill3 {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .Payment-tab {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .Payment-Met select {
+            font-size: 16px;
+            padding: 8px;
+        }
+
+        .Pay-now {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .Payment-tab {
+            display: flex;
+        }
+
+        .payment-method-container,
+        .pay-now-container {
+            flex: 1;
+        }
+
+        .Pay-now:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="custom-navbar">
+        <header class="header">
+            <a href="/loginpage" class="logo"> <img src="../base/images/logo.png" alt="GroceryShop Logo"> GroceryShop </a>
+            <nav class="navbar">
+                <a href="/c/{{ user_id }}">Home</a>
+                <a href="/c/{{ user_id }}/Products">Products</a>
+                <a href="/c/{{ user_id }}/reviews">Reviews </a>
+                <a href="/c/{{ user_id }}/orders">Past Orders</a>
+            </nav>
+            <div class="icons">
+                <a href="/c/{{ user_id }}/cart" style="text-decoration: none;">
+                    <div class="fa fa-shopping-cart" id="cart-btn"></div>
+                </a>
+                <a href="/c/{{ user_id }}/Profile" style="text-decoration: none;">
+                    <div class="fa fa-user" id="login-btn"></div>
+                </a>
+            </div>
+        </header>
+    </div>
+
+    {% if item %}
+    <div class="Cart-container">
+        {% for i in item %}
+        <div class="Cart-item" id="item_{{ i['Item_ID'] }}">
+            <div>
+                {% if i['ItemName'] in images %}
+                <img src="{{ images[i['ItemName']] }}" alt="{{ i['ItemName'] }}" class="Item-image">
+                {% else %}
+                <img src="../base/images/placeholder.jpg" height="125" width="125" alt="{{ i['itemName'] }}"
+                    class="Item-image">
+                {% endif %}
+            </div>
+            <div>
+                <p class="Item-description">{{ i['ItemName']}}</p>
+                <p class="Item-description">Price &#x20B9; {{ i['price']}}</p>
+            </div>
+            <div style="vertical-align: middle;">
+                <button class="increase-btn" data-item-id="{{ i['itemID'] }}" data-stock="{{i['stock']}}"
+                    style="margin-top: 20px;">+</button>
+                <button class="quantity-btn">{{ i['Quantity'] }}</button>
+                <button class="decrease-btn" data-item-id="{{ i['itemID'] }}">-</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="Biling">
+        <p id="cost" class="Bill1" style="margin-top: 17px;">Total MRP: {{ cost }}</p>
+        <p class="Bill2">Handling Fee: 10</p>
+        <p id="total-cost" class="Bill3">Total Cost: {{ tcost }}</p>
+    </div>
+
+    <div class="Payment-tab">
+        <div id="balance" class="balance-container">
+            <p>Balance: {{bal}}</p>
+        </div>
+        <div class="payment-method-container">
+            <form class="Payment-Met">
+                <select name="Payment-Method">
+                    <option value="Cash">Cash</option>
+                    <option value="Wallet">Wallet</option>
+                </select>
+            </form>
+        </div>
+        <div class="pay-now-container">
+            <button class="Pay-now" style="width: 100%;">Pay Now</button>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center" style="margin-top: 120px;">
+        <img src="../base/images/no_orders_yet.png" alt="No orders placed" height="400" width="600">
+        <p class=fs-4>Oops! You haven't added anything to cart yet.</p>
+        <a href="/c/{{ user_id }}/Products" class="btn btn-outline-success btn-lg mt-2">Start Adding</a>
+    </div>
+    {% endif %}
+
+    <script>
+        $(document).ready(function () {
+            function updateCostDisplay(totalCost, cost) {
+                $("#total-cost").text("Total Cost: " + totalCost);
+                $("#cost").text("Total MRP: " + cost);
+            }
+            // Increase button logic
+            $(".increase-btn").click(function () {
+                var itemId = $(this).data("item-id");
+                var quantityElement = $(this).siblings(".quantity-btn");
+                var quantity = parseInt(quantityElement.text()) + 1;
+                var stock = $(this).data("stock");
+                console.log(stock)
+                // Check if quantity exceeds stock
+                if (quantity <= stock) {
+                    quantityElement.text(quantity);
+
+                    var cusID = window.location.pathname.split("/")[2];
+
+                    $.ajax({
+                        type: "POST",
+                        url: `/c/${cusID}/cart`,
+                        data: { item_id: itemId, quantity: quantity },
+                        success: function (response) {
+                            console.log("Quantity updated successfully");
+                            updateCostDisplay(response.total_cost, response.cost);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error updating quantity:", error);
+                        }
+                    });
+                } else {
+                    alert("Exceeds available stock");
+                }
+            });
+
+            // Decrease button logic
+            $(".decrease-btn").click(function () {
+                var itemId = $(this).data("item-id");
+                var quantityElement = $(this).siblings(".quantity-btn");
+                var quantity = parseInt(quantityElement.text());
+
+                // Decrement the quantity if greater than 1
+                if (quantity > 1) {
+                    quantity -= 1;
+                    quantityElement.text(quantity);
+
+                    var cusID = window.location.pathname.split("/")[2];
+
+                    $.ajax({
+                        type: "POST",
+                        url: `/c/${cusID}/cart`,
+                        data: { item_id: itemId, quantity: quantity },
+                        success: function (response) {
+                            console.log("Quantity updated successfully");
+                            updateCostDisplay(response.total_cost, response.cost);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error updating quantity:", error);
+                        }
+                    });
+                }
+            });
+            $(".Pay-now").click(function () {
+                var selectedPaymentMethod = $("select[name='Payment-Method']").val();
+                var balance = parseInt($("#balance").text().split(": ")[1]);
+                var totalCost = parseInt($("#total-cost").text().split(": ")[1]);
+                console.log(selectedPaymentMethod)
+                console.log(balance)
+                console.log(totalCost)
+                var cusID = window.location.pathname.split("/")[2];
+                if (selectedPaymentMethod === "Wallet" && balance < totalCost) {
+                    alert("Insufficient balance. Please select Cash or add funds to your wallet.");
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: `/c/${cusID}/cart/pay`,
+                        data: {
+                            payment_method: selectedPaymentMethod,
+                            total_cost: totalCost
+                        },
+                        success: function (response) {
+                            console.log("Query executed successfully:", response);
+                            window.location.href = `/c/${cusID}`
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error executing query:", error);
+                            alert("Transaction failed");
+                            setTimeout(function () {
+                                location.reload();
+                            }, 500);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
