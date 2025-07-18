@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include 'bootstrap.html' %}
+    <title>User Profile</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-1 {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container-1::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background-color: rgba(40, 180, 99, 0.1);
+            border-radius: 12px;
+            z-index: -1;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px 5px rgba(40, 180, 99, 0.1);
+            }
+
+            to {
+                box-shadow: 0 0 20px 10px rgba(40, 180, 99, 0.1);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #228B22;
+        }
+
+        .profile-info {
+            margin-bottom: 25px;
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .profile-info p {
+            margin: 0;
+            color: #333;
+        }
+
+        .header {
+            background-color: white;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .logo {
+            text-decoration: none;
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar {
+            display: flex;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffc107;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .icons .fa {
+            font-size: 24px;
+            color: #fff;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .icons .fa:hover {
+            color: #ffc107;
+        }
+
+        .container-1 {
+            top: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .big-button {
+            font-size: 15px;
+            padding: 12px 24px;
+            background-color: transparent;
+            border: 1px solid;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #logout {
+            color: red;
+            border-color: red;
+        }
+
+        #edit-button {
+            color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        #edit-button:hover {
+            background-color: #45a049;
+            color: white;
+        }
+
+        #logout:hover {
+            background-color: rgb(209, 0, 0);
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="/loginpage" class="logo"> <img src="{{ url_for('static', filename='images/logo.png') }}" alt="GroceryShop Logo"> GroceryShop </a>
+        <nav class="navbar">
+            <a href="/c/{{ user_id }}">Home</a>
+            <a href="/c/{{ user_id }}/Products">Products</a>
+            <a href="/c/{{ user_id }}/reviews">Reviews </a>
+            <a href="/c/{{ user_id }}/orders">Past Orders</a>
+        </nav>
+        <div class="icons">
+            <a href="/c/{{ user_id }}/cart" style="text-decoration: none;">
+                <div class="fa fa-shopping-cart" id="cart-btn"></div>
+            </a>
+            <a href="/c/{{ user_id }}/Profile" style="text-decoration: none;">
+                <div class="fa fa-user" id="login-btn"></div>
+            </a>
+        </div>
+    </header>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container" style="margin-top: 30px;">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span>{{ message }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="container-1">
+        <h1>User Profile</h1>
+        <div class="profile-info">
+            <label for="customerName">Customer Name:</label>
+            <p id="customerName">{{ customer.FirstName }} {{ customer.LastName }}</p>
+        </div>
+        <div class="profile-info">
+            <label for="age">Age:</label>
+            <p id="email">{{ customer.Age }} years</p>
+        </div>
+        <div class="profile-info">
+            <label for="phoneNumber">Phone Number:</label>
+            <p id="phoneNumber">{{ customer.PhoneNumber }}</p>
+        </div>
+        <div class="profile-info">
+            <label for="email">Email ID:</label>
+            <p id="email">{{ customer.LoginID }}</p>
+        </div>
+
+        <div class="profile-info">
+            <label for="address">Address:</label>
+            <p id="email">{{ customer.AddressLine1 }} {{customer.AddressLine2}}, {{customer.City}}, {{customer.State}},
+                {{customer.pin_code}}</p>
+        </div>
+
+        <div class="profile-info">
+            <h2 style="color: #555;">Wallet</h2>
+            <img src="{{ url_for('static', filename='images/wallet.png') }}" onclick="redirectToWalletPage()" height="100" width="134" alt="wallet"
+                style="cursor: pointer;">
+        </div>
+        <a href="/c/{{ user_id }}/edit"><button class="big-button" id="edit-button">Edit Profile</button></a>
+        <a href="/loginpage"><button class="big-button" id="logout" style="margin-left: 515px;">Log Out</button></a>
+    </div>
+
+    <footer class="footer-bar" style="margin-top: 70px; top: auto;">
+        <div class="footer-links">
+            <a href="/c/{{user_id}}/about us">About Us</a>
+            <a href="/c/{{user_id}}/privacy policy">Privacy Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div class="app-icons" style="float: right; margin-top: 10px; position: relative; top: -60px;">
+            <img src="{{ url_for('static', filename='images/get_it_on_icon.png') }}" alt="Play Store"
+                style="width: 70px; height: 70px; margin-right: 20px;">
+        </div>
+    </footer>
+
+    <script>
+        function redirectToWalletPage() {
+            window.location.href = "/c/{{ user_id }}/wallet";
+        }
+    </script>
+</body>
+
+</html>

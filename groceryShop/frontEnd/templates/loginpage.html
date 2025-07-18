@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% include 'bootstrap.html' %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            color: green;
+        }
+
+        .header .logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+        }
+
+        .navbar a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+        }
+
+        #login-form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        #login-form {
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: green;
+            font-weight: bolder;
+            font-size: x-large;
+            text-decoration: underline;
+        }
+
+        .form-label {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        #login-btn {
+            margin-top: 1px;
+            width: 100%;
+            height: 30px;
+            padding: 8px 10px;
+            background-color: green;
+            color: white;
+            font-size: small;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #login-btn:hover {
+            background-color: darkgreen;
+        }
+
+        #login-btn:focus {
+            outline: none;
+        }
+
+        #register-link {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        #register-link a {
+            color: blue;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        #register-link p {
+            font-size: 14px;
+        }
+
+        #image-container {
+            flex-grow: 1;
+            margin-left: 50px;
+            margin-right: 100px;
+        }
+
+        #image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="/" class="logo"> <img src="../static/images/logo.png" alt="GroceryShop Logo"> GroceryShop </a>
+        <nav class="navbar">
+            <a href="/c/{{ 0 }}">Home </a>
+            <a href="/c/{{ 0 }}/Products">Products </a>
+            <a href="/c/{{ 0 }}/reviews" style="margin-right: 300px;">Reviews </a>
+        </nav>
+    </header>
+
+    <div id="login-form-container">
+        <div id="image-container">
+            <img src="../static/images/benefits_img.png" alt="Benefits Image" height="700px" width="700px">
+        </div>
+        <div id="login-form">
+            <h2>Login</h2>
+            <form action="/loginpage" method="POST">
+                <div class="mb-3">
+                    <label for="login-id" class="form-label">Email ID</label>
+                    <input type="text" class="form-control" id="login-id" name="login-id" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" id="login-btn">Login</button>
+                {% if error %}
+                <p class="error" style="font-size: small; color: red;">{{ error }}</p>
+                {% endif %}
+            </form>
+
+            <!-- "Not a user yet?" button and link to the registration page -->
+            <div id="register-link">
+                <p style="font-size: 14px;">Not a user yet? <a href="/registerpage">Register here</a></p>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
