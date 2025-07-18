@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+:root {
+  --green: green;
+  --black: black;
+  --light-color: #666;
+  --box-shadow: 0 .1rem 1rem rgba(0, 0, 0.1);
+  --border: 2rem solid rgba(0, 0, 0.1);
+  --outline: .1rem solid rgba(0, 0, 0.1);
+}
+
+* {
+  font-family: 'Poppins';
+  font-size: 22px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  transition: all .2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+}
+
+body {
+  background: #eee;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 9%;
+  background: #fff;
+  box-shadow: var(--box-shadow);
+  z-index: 9999;
+}
+
+.header .logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+.header .logo img {
+  width: 100px;
+  height: 60px;
+  z-index: 9999;
+}
+
+.header .navbar {
+
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.header .navbar a {
+  text-decoration: none;
+  font-size: 1.7rem;
+  margin: 0 1rem;
+  color: var(--black);
+  z-index: 9999;
+}
+
+.header .navbar a:hover {
+  color: var(--green);
+}
+
+.header .icons div {
+  border: 1px solid;
+  height: 4.5rem;
+  width: 4.5rem;
+  line-height: 4.5rem;
+  border-radius: .5rem;
+  background: #eee;
+  color: var(--black);
+  font-size: 2rem;
+  margin-right: .3rem;
+  text-align: center;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.header .icons div:hover {
+  background: var(--green);
+  color: white;
+
+}
+
+.container #home-btn {
+  display: inline-block;
+  border: 1px solid;
+  height: 4.5rem;
+  width: 4.5rem;
+  line-height: 4.5rem;
+  border-radius: .5rem;
+  background: #eee;
+  color: var(--black);
+  font-size: 2rem;
+  margin-right: .3rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.icons {
+  font-size: 1.7rem;
+  color: var(--black);
+  margin-left: 100px;
+  display: inline-block;
+}
+
+.register-container {
+  margin-top: 50rem;
+  display: flex;
+  justify-content: center;
+}
+
+#register-form {
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#register-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: green;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+#register-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#register-btn:hover {
+  background-color: darkgreen;
+}
+
+#register-btn:focus {
+  outline: none;
+
+}
+
+.footer-bar {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  color: black;
+  display: flexbox;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px;
+  box-shadow: var(--box-shadow);
+  margin-top: 10px;
+}
+
+.footer-bar a {
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 0 20px;
+  transition: color 0.3s;
+}
+
+.footer-bar a:hover {
+  color: var(--green);
+}

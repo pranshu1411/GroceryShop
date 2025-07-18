@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../static/images/grocery_background.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    width: 450px;
+    height: 450px;
+    background-color: #ffffff;
+    margin: 150px 10px;
+    border-radius: 20px;
+    position: relative;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    backdrop-filter: blur(200px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    align-items: center;
+    transition: transform 0.1s ease;
+}
+
+.box:hover {
+    transform: scale(1.1);
+}
+
+#admin_box {
+    margin-right: 35px;
+}
+
+#customer_box {
+    margin-left: 35px;
+}
+
+.info-text {
+    margin-top: 65px;
+    font-size: xx-large;
+    font-family: Poppins;
+    color: rgb(255, 255, 255);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
